@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>AgriData Pioneers - KZN Smart Gardens</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+    --primary-color: #89CFF0; /* Baby Blue */
+    --secondary-color: #cbe5d1;
+    --text-color: #333;
+    --bg-color: #f5f7fa;
+    --ribbon-bg: #b3e5fc; /* lighter baby blue */
+    --nav-link-hover: #5daedc; /* darker shade of baby blue */
+    --card-bg: #ffffff;
+    --shadow: 0 3px 8px rgba(0,0,0,0.11);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Full-page background image */
+.page-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-image: url('garden_with_green_grass_and_flowers_in_blue_sky_background_hd_garden-2560x1440.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+}
+
+/* Gradient overlay for better readability */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Header section */
+header {
+    background: transparent;
+    color: var(--primary-color);
+    padding: 80px 0 20px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 3em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+header p {
+    font-size: 1.2em;
+    margin: 5px 0 0;
+    color: #555;
+}
+.header-content {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+/* Navigation Ribbon */
+.navbar {
+    background: var(--ribbon-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-wrap: wrap;
+}
+.nav-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.nav-link {
+    color: var(--primary-color);
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.nav-link:hover, .nav-link.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Side Menu Bar */
+.side-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 101;
+    top: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+}
+.side-menu a {
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 1.1em;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+.side-menu a:hover {
+    background-color: var(--nav-link-hover);
+}
+.side-menu .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 102;
+    border-radius: 5px;
+}
+
+/* Main content sections */
+main section {
+    display: none;
+    background: white;
+    margin: 32px auto;
+    padding: 2rem 2.2rem;
+    border-radius: 8px;
+    max-width: 900px;
+    box-shadow: var(--shadow);
+}
+main section.active {
+    display: block;
+}
+
+/* General element styling */
+h2 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+button, .nav-link {
+    transition: background-color 0.2s;
+    border: none;
+}
+button {
+    padding: 10px 18px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+button:hover {
+    background: var(--nav-link-hover);
+}
+select, input, textarea {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.image-placeholder {
+    width: 100%;
+    height: 250px;
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-style: italic;
+    margin: 20px 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Weather forecast styling */
+.weather-card {
+    display: inline-block;
+    width: 120px;
+    padding: 10px;
+    margin: 5px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Contact details styling */
+.contact-details {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+.contact-details p {
+    margin: 5px 0;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    color: #fff;
+    font-size: 0.9em;
+    margin-top: 40px;
+    background: var(--primary-color);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .navbar {
+        justify-content: center;
+    }
+    .nav-link {
+        width: 100%;
+        text-align: center;
+    }
+    .openbtn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+    header {
+        padding-top: 100px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="page-bg"></div>
+    <div class="overlay"></div>
+
+    <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a class="nav-link" id="productsTabBtn" onclick="showTab('productsTab'); closeNav();">Products & Prices</a>
+        <a class="nav-link" id="weatherTabBtn" onclick="showTab('weatherTab'); closeNav();">7-Day Weather</a>
+        <a class="nav-link" id="droneTabBtn" onclick="showTab('droneTab'); closeNav();">Drone & Sensors</a>
+        <a class="nav-link" id="levelsTabBtn" onclick="showTab('levelsTab'); closeNav();">Levels of Solution</a>
+        <a class="nav-link" id="tasksTabBtn" onclick="showTab('tasksTab'); closeNav();">Task Scheduler</a>
+        <a class="nav-link" id="newsTabBtn" onclick="showTab('Findings'); closeNav();">Findings</a>
+        <a class="nav-link" id="recommendTabBtn" onclick="showTab('recommendTab'); closeNav();">Recommendations</a>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-links">
+            <a class="nav-link" id="homeTabBtn" onclick="showTab('homeTab')">Home</a>
+            <a class="nav-link" id="gardenCalcTabBtn" onclick="showTab('gardenCalcTab')">Garden Calculator</a>
+            <a class="nav-link" id="aboutTabBtn" onclick="showTab('aboutTab')">About Us</a>
+            <a class="nav-link" onclick="openNav()">More Options</a>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <h1>AgriData Pioneers</h1>
+            <p>KZN Smart Gardens & Digital Platform</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            <section id="homeTab" class="active">
+                <h2>Welcome to AgriData Pioneers</h2>
+                <p>
+                    Enhancing food security in KwaZulu-Natal through modern technology. Our digital platform helps you manage your garden, track its progress, and access crucial data on weather, soil moisture, and more. We provide the tools to turn your garden into a smart, productive, and sustainable space.
+                </p>
+                <div class="image-placeholder">
+                    <img src="Oranjezicht-800x400.jpg" alt="KZN Garden Image">
+                </div>
+                <p>
+					Whether you're a small-scale farmer or a community garden project, our solutions are designed to help you optimize your agricultural practices and achieve better yields with less effort.
+                </p>
+				<p>“Eating is an agricultural act.” saidWendell Berry. report looks at how the AgriData Pioneers platform can help supports food security using technology. The focus is on smart gardens, digital tools, and how both young and old people can benefit from learning these tools. By involving over 50% of the population, the platform aims to improve livelihoods and reduce food insecurity.</p>
+            </section>
+
+            <section id="aboutTab">
+                <h2>About AgriData Pioneers</h2>
+                <p>
+                    Enhancing Food Security in Zululand and Beyond
+					<br>Digital solution for community gardens
+                </p>
+                <div class="contact-details">
+                    <h3>Contact Us</h3>
+                    <p><strong>Email:</strong> info@agridatapioneers.co.za</p>
+                    <p><strong>Phone:</strong> +27 12 345 6789</p>
+                    <p><strong>Address:</strong> 123 Innovation Drive, Durban, KwaZulu-Natal, 4001</p>
+                </div>
+                <form onsubmit="submitContactForm(event)" style="margin-top: 20px;">
+                    <div class="form-group">
+                        <label for="contactName">Name:</label>
+                        <input type="text" id="contactName" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email:</label>
+                        <input type="email" id="contactEmail" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Message:</label>
+                        <textarea id="contactMessage" required rows="4"></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                    <p id="contactStatus" style="margin-top: 10px;"></p>
+                </form>
+            </section>
+
+            <section id="gardenCalcTab">
+                <h2>Garden Area, Soil & Fertilizer Calculator</h2>
+                <div>
+                    <div><b>Garden shape: </b><span id="gardenShape"></span></div>
+                    <div class="form-group">
+                        <label>Length (meters):</label>
+                        <input id="gardenLength" type="number" min="1" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label>Width (meters):</label>
+                        <input id="gardenWidth" type="number" min="1" value="" />
+                    </div>
+                    <button onclick="calculateGardenSpace()">Calculate Area</button>
+                </div>
+                <p id="gardenAreaResult"></p>
+                <div style="margin-top:12px;">
+                    <div class="form-group">
+                        <label>Select Crop:</label>
+                        <select id="fertilizerCrop">
+                                <option value="maize">Maize</option>
+                                <option value="wheat">Wheat</option>
+                                <option value="sorghum">Sorghum</option>
+                                <option value="rice">Rice</option>
+                                <option value="barley">Barley</option>
+                                <option value="sunflower">Sunflower</option>
+                                <option value="potato">Potato</option>
+                                <option value="tomato">Tomato</option>
+                                <option value="cabbage">Cabbage</option>
+                                <option value="spinach">Spinach</option>
+                                <option value="onion">Onion</option>
+                                <option value="carrot">Carrot</option>
+                                <option value="soybeans">Soybeans</option>
+                                <option value="groundnuts">Groundnuts</option>
+                                <option value="sugarcane">Sugarcane</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="coffee">Coffee</option>
+                                <option value="tea">Tea</option>
+                                <option value="bananas">Bananas</option>
+                                <option value="oranges">Oranges</option> 
+                        </select>        
+                    </div>
+                    <div class="form-group">
+                        <label>Fertilizer Category:</label>
+                        <select id="fertilizerCategory" onchange="updateFertilizerOptions()">
+                            <option value="organic">Organic Fertilizers</option>
+                            <option value="inorganic">Inorganic Fertilizers</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fertilizer Type:</label>
+                        <select id="fertilizerType">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <button onclick="calculateFertilizerNeeded()">Calculate Fertilizer</button>
+                </div>
+                <p id="fertilizerResult"></p>
+            </section>
+
+            <section id="productsTab">
+                <h2>Our Products & Prices</h2>
+                <ul>
+                    <li>Soil Moisture Sensor — R150 each</li>
+                    <li>Automated Watering System — R300 per setup</li>
+                    <li>Drone Aerial Monitoring Service — Starting at R500 per session</li>
+                    <li>PlantEye 3D Scanner — Contact us for pricing</li>
+                </ul>
+                <h3>PlantEye 3D Model Viewer</h3>
+                <iframe title="PlantEye 3D Model" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" src="https://sketchfab.com/models/dd657847523a432c87f9c7788dace036/embed" style="width: 100%; height: 400px; border: none;"></iframe>
+            </section>
+
+            <section id="weatherTab">
+                <h2>Upcoming 7-Day Weather</h2>
+                <div id="weatherForecast"></div>
+                <button onclick="generateWeatherForecast()" style="margin-top:14px;">Refresh Forecast</button>
+            </section>
+
+            <section id="droneTab">
+                <h2>Drone & Sensor Monitoring</h2>
+                <ul>
+				<li>Unreliable soil moisture monitoring may lead to inconsistent watering schedule</li>
+				<li>Missed or repeatedly garden tasks.</li>
+				<li>No effective digital system to track and schedule garden tasks.</li>
+				<strong><p>This leads to :</p></strong>
+				<li>Low garden productivity.</li>
+				<li>The difficulties in scaling up successful gardens</li>
+				<li>Lasty Poor yields and water resources</li>
+				</ul>
+                <div class="image-placeholder">
+                    <img src="drone.jpg" alt="Drone/Flight Image">
+                </div>
+                
+            </section>
+
+            <section id="levelsTab">
+                <h2>Levels of Solution</h2>
+                <ul>
+                    <li>Manual task scheduling and dashboard</li>
+                    <li>Automated alerts via SMS/app</li>
+                    <li>Drone aerial monitoring and PlantEye scanning</li>
+                    <li>Multi-garden, scalable analytics</li>
+                </ul>
+            </section>
+            
+            <section id="tasksTab">
+                <h2>Task Scheduler</h2>
+                <div class="form-group">
+                    <label for="taskDate">Date:</label>
+                    <input type="date" id="taskDate" min="2025-10-15" />
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">Task:</label>
+                    <input type="text" id="taskDescription" placeholder="Enter task (e.g., Watering, Weeding)" />
+                </div>
+                <button onclick="addTask()">Add Task</button>
+                <ul class="task-display" id="taskList"></ul>
+            </section>
+
+            <section id="recommendTab">
+                <h2>Recommendations & Next Steps</h2>
+                <ul>
+                <li>Training for All Ages: Run workshops where young people teach digital farming tools, and older farmers share traditional practices.</li>
+				<li>School & Community Gardens: Introduce AgriData tools in schools and community centers to involve learners early.</li>
+				<li>Affordable Access to Tools: Partner with government and NGOs to subsidize sensors and watering systems for rural households.</li>
+				<li>Expansion Strategy: Roll out the platform to more KwaZulu-Natal towns first, then expand to other provinces in South Africa.</li>
+				<li>Monitoring & Support: Use drones and weather apps to give real-time advice to farmers, especially during droughts and extreme weather.</li>
+                </ul>
+            </section>
+            
+            <section id="Findings">
+                <h2>Findings</h2>
+                    <p>Digital Tools in Use: Soil moisture sensors, drones, automated watering systems, PlantEye 3D scanners, and digital dashboards.
+					<br>Community Reach: Expanded to towns such as KwaMashu, Pietermaritzburg, and Port Shepstone, Nquthu and Zululand (News section, July & August 2025).
+					<br>Food Security Gap: In South Africa, more than 50% of households face food insecurity at different times of the year (Stats SA, 2023).
+					<br>Population Involvement: Success depends on participation of both youth (with technology skills) and elderly (with farming knowledge).
+					</p>
+            </section>
+        </main>
+    </div>
+
+
+    
+    <footer>
+        &copy; 2025 AgriData Pioneers - KZN Digital Garden Platform
+    </footer>
+
+    <script>
+        // Store all sections and buttons
+        const tabs = document.querySelectorAll('main section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sideMenuLinks = document.querySelectorAll('.side-menu a');
+        
+        // Function to show a specific tab and set active link
+        function showTab(tabId) {
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+
+            navLinks.forEach(link => link.classList.remove('active'));
+            sideMenuLinks.forEach(link => link.classList.remove('active'));
+            
+            const mainLink = document.getElementById(tabId + 'Btn');
+            if (mainLink) {
+                mainLink.classList.add('active');
+            }
+        }
+
+        // Open and close the side navigation menu
+        function openNav() {
+            document.getElementById("sideMenu").style.width = "250px";
+        }
+        function closeNav() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+
+        // Fertilizer options
+        const fertilizerOptions = {
+            organic: [
+                { name: "Compost", rate: 120 },
+                { name: "Manure", rate: 150 },
+                { name: "Bone Meal", rate: 80 },
+                { name: "Fish Emulsion", rate: 60 }
+            ],
+            inorganic: [
+                { name: "Urea", rate: 50 },
+                { name: "NPK 10-10-10", rate: 70 },
+                { name: "Ammonium Nitrate", rate: 60 },
+                { name: "Superphosphate", rate: 80 }
+            ]
+        };
+
+        // Initialize fertilizer options
+        function updateFertilizerOptions() {
+            const category = document.getElementById('fertilizerCategory').value;
+            const typeSelect = document.getElementById('fertilizerType');
+            
+            // Clear existing options
+            typeSelect.innerHTML = '';
+            
+            // Add new options based on category
+            fertilizerOptions[category].forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option.name.toLowerCase().replace(/\s+/g, '-');
+                opt.textContent = `${option.name} (${option.rate}g/m²)`;
+                typeSelect.appendChild(opt);
+            });
+        }
+
+        // --- All other functions from your original code ---
+        function calculateGardenSpace() {
+            const length = parseFloat(document.getElementById('gardenLength').value);
+            const width = parseFloat(document.getElementById('gardenWidth').value);
+            const area = length * width;
+            if (!isNaN(area)) {
+                document.getElementById('gardenAreaResult').textContent = `Garden Area: ${area} m²`;
+            } else {
+                document.getElementById('gardenAreaResult').textContent = 'Please enter valid numbers for length and width.';
+            }
+        }
+        
+        function calculateFertilizerNeeded() {
+            const areaText = document.getElementById('gardenAreaResult').textContent;
+            if (!areaText || areaText.includes('Please')) {
+                document.getElementById('fertilizerResult').textContent = 'Please calculate the garden area first.';
+                return;
+            }
+            
+            const area = parseFloat(areaText.split(':')[1].replace('m²', '').trim());
+            const category = document.getElementById('fertilizerCategory').value;
+            const fertilizerType = document.getElementById('fertilizerType').value;
+            
+            // Find the selected fertilizer
+            let selectedFertilizer = fertilizerOptions[category].find(
+                option => option.name.toLowerCase().replace(/\s+/g, '-') === fertilizerType
+            );
+            
+            if (selectedFertilizer) {
+                const needed = (area * selectedFertilizer.rate) / 1000;
+                document.getElementById('fertilizerResult').textContent = 
+                    `You need approximately ${needed.toFixed(2)} kg of ${selectedFertilizer.name}.`;
+            } else {
+                document.getElementById('fertilizerResult').textContent = 'Please select a fertilizer type.';
+            }
+        }
+        
+        function addTask() {
+            const taskList = document.getElementById('taskList');
+            const taskDate = document.getElementById('taskDate').value;
+            const taskDescription = document.getElementById('taskDescription').value;
+            
+            // Check if date is from October 15 onwards
+            const minDate = new Date('2025-10-15');
+            const selectedDate = new Date(taskDate);
+            
+            if (selectedDate < minDate) {
+                alert('Please select a date from October 15, 2025 onwards.');
+                return;
+            }
+            
+            if (taskDate && taskDescription) {
+                const li = document.createElement('li');
+                li.innerHTML = `<span><strong>${taskDate}:</strong> ${taskDescription}</span> <button onclick="this.parentElement.remove()">Done</button>`;
+                taskList.appendChild(li);
+                document.getElementById('taskDate').value = '';
+                document.getElementById('taskDescription').value = '';
+            } else {
+                alert('Please fill in both date and task description.');
+            }
+        }
+        
+        function generateWeatherForecast() {
+            const forecastDiv = document.getElementById('weatherForecast');
+            const weatherData = ['Sunny, 25°C', 'Partly Cloudy, 23°C', 'Rain, 20°C', 'Sunny, 26°C', 'Cloudy, 22°C', 'Showers, 21°C', 'Thunderstorms, 19°C'];
+            let html = '';
+            const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            for (let i = 0; i < weatherData.length; i++) {
+                html += `<div class="weather-card"><strong>${days[i]}</strong><br/>${weatherData[i]}</div>`;
+            }
+            forecastDiv.innerHTML = html;
+        }
+        
+        function submitContactForm(event) {
+            event.preventDefault();
+            const status = document.getElementById('contactStatus');
+            status.textContent = 'Message sent! We will get back to you soon.';
+            status.style.color = 'green';
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactMessage').value = '';
+        }
+
+        // Show home tab by default on load
+        document.addEventListener('DOMContentLoaded', () => {
+            showTab('homeTab');
+            generateWeatherForecast();
+            updateFertilizerOptions();
+            
+            // Set minimum date for task scheduler to October 15, 2025
+            document.getElementById('taskDate').min = '2025-10-15';
+        });
+    </script>
+</body>
+</html>
